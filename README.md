@@ -1,15 +1,11 @@
 chat-window-android
 ===============
 
-Embedding mobile chat window in Android application for
-
-**LiveChat:** https://developers.livechatinc.com/mobile/android/ and
-
-**Chat.io:** https://chat.io/docs/
+Embedding mobile chat window in Android application for **Chat.io:** https://chat.io/docs/
 
 # Installation
 
-https://jitpack.io/#livechat/chat-window-android
+https://jitpack.io/#livechat/chatio-chat-widget-android
 
 To get a project into your build:
 
@@ -26,7 +22,7 @@ allprojects {
 Step 2. Add the dependency
 ```
 dependencies {
-    compile 'com.github.livechat:chat-window-android:v2.0.2'
+    compile 'com.github.livechat:chatio-chat-widget-android:v2.0.5'
 }
 ```
 
@@ -54,7 +50,7 @@ First, you need to configure your chat window
 
 Simply use ChatWindowConfiguration.java constructor. Note that licence number is mandatory.
 
-```configuration = new ChatWindowConfiguration("your_licence_number", "group_id", "Visitor name", "visitor@email.com", customParamsMap);```
+```configuration = new ChatWindowConfiguration("your_licence_number", "Visitor name", "visitor@email.com", customParamsMap);```
 
 ## Chat Window View
 
@@ -168,16 +164,15 @@ There are two ways to open the chat window – using Activity or Fragment.
 In order to open a chat window in new Activity, you need to declare **ChatWindowActivity** in your manifest. Add the following line to **AndroidManifest.xml**, between `<application></application>` tags:
 
 ```xml
-<activity android:name="com.livechatinc.inappchat.ChatWindowActivity" android:configChanges="orientation|screenSize" />
+<activity android:name="io.chat.inappchat.ChatWindowActivity" android:configChanges="orientation|screenSize" />
 ```
 
 <div class="clear"></div>
 
-Finally, add the following code to your application, in a place where you want to open the chat window (e.g. button listener). You need to provide a Context (your Activity or Application object), your LiveChat or Chat.io license number (taken from the your app: [LiveChat](https://my.livechatinc.com/settings/code) or [Chat.io](https://app.chat.io/settings/installation) and, optionally, an ID of a group:
+Finally, add the following code to your application, in a place where you want to open the chat window (e.g. button listener). You need to provide a Context (your Activity or Application object) and your Chat.io license number (taken from the your app: [Chat.io](https://app.chat.io/settings/installation):
 
 ```java
 Intent intent = new Intent(context, com.livechatinc.inappchat.ChatWindowActivity.class);
-intent.putExtra(com.livechatinc.inappchat.ChatWindowActivity.KEY_GROUP_ID, "your_group_id");
 intent.putExtra(com.livechatinc.inappchat.ChatWindowActivity.KEY_LICENSE_NUMBER, "your_license_number");
 context.startActivity(intent);
 ```
@@ -193,12 +188,12 @@ intent.putExtra(com.livechatinc.inappchat.ChatWindowActivity.KEY_VISITOR_EMAIL, 
 
 ### Using Fragment
 
-In order to open chat window in new Fragment, you need to add the following code to your application, in a place where you want to open the chat window (e.g. button listener). You also need to provide your LiveChat or Chat.io license number and group ID:
+In order to open chat window in new Fragment, you need to add the following code to your application, in a place where you want to open the chat window (e.g. button listener). You also need to provide your Chat.io license number:
 
 ```java
 getFragmentManager()
    .beginTransaction()
-   .replace(R.id.frame_layout, ChatWindowFragment.newInstance("your_license_number", "your_group_id"), "chat_fragment")
+   .replace(R.id.frame_layout, ChatWindowFragment.newInstance("your_license_number"), "chat_fragment")
    .addToBackStack("chat_fragment")
    .commit();
 ```
@@ -209,12 +204,12 @@ Method `ChatWindowFragment.newInstance()` returns chat window Fragment.
 
 <div class="clear"></div>
 
-It’s also possible to automatically login to chat window by providing visitor’s name and email. You need to disable [pre-chat survey](https://my.livechatinc.com/settings/pre-chat-survey) in web application and use different `newInstance()` method:
+It’s also possible to automatically login to chat window by providing visitor’s name and email. You need to use different `newInstance()` method:
 
 ```java
 getFragmentManager()
    .beginTransaction()
-   .replace(R.id.frame_layout, ChatWindowFragment.newInstance("your_license_number", "your_group_id", “visitor _name”, “visitor _email”), "chat_fragment")
+   .replace(R.id.frame_layout, ChatWindowFragment.newInstance("your_license_number", “visitor _name”, “visitor _email”), "chat_fragment")
    .addToBackStack("chat_fragment")
    .commit();
 ```
